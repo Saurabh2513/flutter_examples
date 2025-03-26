@@ -1,27 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:student_leaderboard/services/database_servics.dart';
+import 'package:student_leaderboard/pages/first_page.dart';
 
-import 'leader_board_screen.dart';
 
 void main() {
-  runApp(StudentLeaderboardApp());
+  runApp(MyApp());
 }
 
-class StudentLeaderboardApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final DatabaseService _databaseService = DatabaseService.instance;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Student Leaderboard',
+      title: 'Student Marks',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: LeaderboardScreen(),
+      home: FirstPage(),
     );
   }
 }
-
-
-
