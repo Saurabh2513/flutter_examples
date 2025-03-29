@@ -18,6 +18,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
   final _subject4Controller = TextEditingController();
   final _subject5Controller = TextEditingController();
 
+  // Function to add student to the database
   _addStudent() async {
     final name = _nameController.text;
     final subject1 = int.tryParse(_subject1Controller.text) ?? 0;
@@ -27,6 +28,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
     final subject5 = int.tryParse(_subject5Controller.text) ?? 0;
 
     if (name.isNotEmpty) {
+      // Calculate percentage
       final percentage = ((subject1 + subject2 + subject3 + subject4 + subject5) / 500) * 100;
 
       final student = {
@@ -36,12 +38,22 @@ class _AddStudentPageState extends State<AddStudentPage> {
         'subject3': subject3,
         'subject4': subject4,
         'subject5': subject5,
-        'percentage': percentage.toInt(),
+        'percentage': percentage.toInt(),  // Store percentage as an integer
       };
 
+      // Insert the student into the database
       await DatabaseHelper.instance.insertStudent(student);
-      widget.onStudentAdded(); // Refresh the student list in the first page
+
+      // Refresh the student list in the first page
+      widget.onStudentAdded();
+
+      // Go back to the first page
       Navigator.pop(context);
+    } else {
+      // Show an error if the name field is empty
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please enter a student name!")),
+      );
     }
   }
 
@@ -86,8 +98,8 @@ class _AddStudentPageState extends State<AddStudentPage> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _addStudent,
-              child: Text('Add Student'),
+              onPressed: _addStudent,  // Call the method when Save is clicked
+              child: Text('Save Student'),
             ),
           ],
         ),

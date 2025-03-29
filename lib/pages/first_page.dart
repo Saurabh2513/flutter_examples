@@ -16,13 +16,20 @@ class _FirstPageState extends State<FirstPage> {
     _loadStudents();
   }
 
+  // Load students from the database
   _loadStudents() async {
     final studentList = await DatabaseHelper.instance.getStudents();
+    studentList.sort((a, b) {
+      double percentageA = calculatePercentage(a);
+      double percentageB = calculatePercentage(b);
+      return percentageB.compareTo(percentageA); // Sort descending by percentage
+    });
     setState(() {
       students = studentList;
     });
   }
 
+  // Calculate the percentage for each student
   double calculatePercentage(Map<String, dynamic> student) {
     int totalMarks = student['subject1'] +
         student['subject2'] +
